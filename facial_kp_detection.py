@@ -36,4 +36,5 @@ class KPdataset(Data.Dataset):
     def __getitem__(self,idx):
         data=(trainingImage2numpy(self.csv_data.iloc[idx,-1]),self.csv_data.iloc[idx,:-1])
         return data
+train_loader=Data.DataLoader(dataset=KPdataset('./training.csv'),batch_size=50,shuffle=True)
 
