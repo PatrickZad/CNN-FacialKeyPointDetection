@@ -11,7 +11,7 @@ data split
 '''
 
 
-class Dataset0(Data.Dataset):
+class Dataset(Data.Dataset):
     def __init__(self, df):
         self.__points = self.__data_prepocess(df)
         self.__originimage = df.iloc[:, -1]
@@ -41,12 +41,15 @@ class Dataset0(Data.Dataset):
         )
         return data
 
-
+def pre_task(origindf):
+    dataset=Dataset(origindf)
+    outsize=8
+    return outsize,dataset
 def run_task(origindf):
     network = DetecNN(8).cuda()
     optimizer = torch.optim.Adam(network.parameters(), lr=0.001)
     loss_func = nn.MSELoss()
-    train_loader = Data.DataLoader(dataset=Dataset0(
+    train_loader = Data.DataLoader(dataset=Dataset(
         origindf), batch_size=50, shuffle=True)
     for step, (x, y) in enumerate(train_loader):
         batch_x = Variable(x).cuda()
@@ -57,6 +60,7 @@ def run_task(origindf):
         loss.backward()
         optimizer.step()
         print('loss:%.4f' % loss.data.item())
-
+'''
 df = pd.read_csv('./training.csv')
 run_task(df)
+'''

@@ -1,3 +1,4 @@
 *.csv
+! training.csv
 *.zip
 mnist/
